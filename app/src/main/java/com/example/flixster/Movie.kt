@@ -1,14 +1,32 @@
 package com.example.flixster
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import org.json.JSONArray
 
-class Movie {
-    @SerializedName("title")
-    var title: String? = null
-
-    @SerializedName("overview")
-    var description: String? = null
-
-    @SerializedName("poster_path")
-    var posterURL: String? = null
+@Parcelize
+data class Movie(
+    private val posterPath: String,
+    val mTitle: String,
+    val mOverview: String,
+) : Parcelable {
+    @IgnoredOnParcel
+    val posterURL = "https://image.tmdb.org/t/p/w342/$posterPath"
+    companion object {
+        fun fromJsonArray(movieJsonArray: JSONArray): MutableList<Movie> {
+            val movies = mutableListOf<Movie>()
+            for (i in 0 until movieJsonArray.length()){
+                val movieJson = movieJsonArray.getJSONObject(i)
+                movies.add(
+                    Movie(
+                        movieJson.getString("poster_path"),
+                        movieJson.getString("title"),
+                        movieJson.getString("overview")
+                    )
+                )
+            }
+            return movies
+        }
+    }
 }
