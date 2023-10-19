@@ -2,7 +2,7 @@
 
 Submitted by: Ernesto Diaz
 
-Flixster is a movie browsing app that allows users to browse ... [TODO] 
+Flixster is a movie browsing app that allows users to browse through movies and famous celebrities. 
 
 Time spent: 10 hours spent in total
 
